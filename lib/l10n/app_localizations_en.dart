@@ -931,14 +931,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updatePeriod => 'Update Period';
 
   @override
-  String get updatePeriodHint =>
+  String get luxmeterUpdatePeriodHint =>
       'Please provide time interval at which data will be updated (100 ms to 1000 ms)';
 
   @override
   String get highLimit => 'High Limit';
 
   @override
-  String get highLimitHint =>
+  String get luxmeterHighLimitHint =>
       'Please provide the maximum limit of lux value to be recorded (10 Lx to 10000 Lx)';
 
   @override
@@ -985,4 +985,118 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get baroMeterBulletPoint4 =>
       'Select the sensor by going to the Configure tab from the bottom navigation bar and choose BMP-180 in the drop down menu under Select Sensor.';
+
+  @override
+  String get sharingMessage => 'Sharing PSLab Data';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get deleteHint => 'Are you sure you want to delete this file?';
+
+  @override
+  String get deleteFile => 'Delete File';
+
+  @override
+  String get deleteAllData => 'Delete All Data';
+
+  @override
+  String get deleteCautionMessage =>
+      'Are you sure you want to delete all logged data for this instrument?';
+
+  @override
+  String get deleteAll => 'Delete All';
+
+  @override
+  String get noLoggedData => 'No logged data found.';
+
+  @override
+  String get importLog => 'Import Log';
+
+  @override
+  String get failedToSave => 'Failed to save file. No data was recorded.';
+
+  @override
+  String get fileSaved => 'File saved';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get enterFileName =>
+      'Enter filename (leave empty for auto-generated name)';
+
+  @override
+  String get fileName => 'Filename';
+
+  @override
+  String get saveRecording => 'Save Recording';
+
+  @override
+  String get recordingStarted => 'Recording started';
+
+  @override
+  String get noValidData => 'No valid data to display.';
+
+  @override
+  String get csvPickingError => 'Error picking or reading CSV file';
+
+  @override
+  String get csvReadingError => 'Error reading CSV from file';
+
+  @override
+  String get sharingError => 'Error sharing file';
+
+  @override
+  String get csvGettingError => 'Error getting saved files';
+
+  @override
+  String get unsupportedPlatform => 'Unsupported platform';
+
+  @override
+  String get noDataRecorded => 'No data recorded to save for';
+
+  @override
+  String get csvFileSaved => 'CSV file saved at';
+
+  @override
+  String get csvSavingError => 'Error saving CSV file';
+
+  @override
+  String get csvDeletingError => 'Error deleting file';
+
+  @override
+  String get fileDeleted => 'File deleted';
+
+  String get soundmeterConfig => 'Soundmeter Configurations';
+
+  @override
+  String get barometerConfig => 'Barometer Configurations';
+
+  @override
+  String get baroUpdatePeriodHint =>
+      'Please provide time interval at which data will be updated (100 ms to 2000 ms)';
+
+  @override
+  String get barometerHighLimitHint =>
+      'Please provide the maximum limit of lux value to be recorded (0 atm to 1.10 atm)';
+
+  @override
+  String get gyroscopeConfigurations => 'Gyroscope Configurations';
+
+  @override
+  String get gyroscopeHighLimitHint =>
+      'Please provide the maximum limit of lux value to be recorded (0 rad/s to 1000 rad/s)';
+
+  @override
+  String get accelerometerConfigurations => 'Accelerometer Configurations';
+
+  @override
+  String get accelerometerUpdatePeriodHint =>
+      'Please provide time interval at which data will be updated';
+
+  @override
+  String get accelerometerHighLimitHint =>
+      'Please provide the maximum limit of lux value to be recorded';
 }
