@@ -2,13 +2,14 @@ name: "Linux ARM64 Workflow"
 
 inputs:
   VERSION_NAME:
-    description: 'Version Name to be used for build'
+    description: "Version Name to be used for build"
     required: false
-    default: '1.0.0'
+    default: "1.0.0"
+
   VERSION_CODE:
-    description: 'Version Code to be used for build'
+    description: "Version Code to be used for build"
     required: true
-    default: '1'
+    default: "1"
 
 runs:
   using: "composite"
@@ -16,45 +17,49 @@ runs:
     - name: Install dependencies from Apt
       shell: bash
       run: |
-        sudo apt-get update -y;
-        sudo apt-get install -y curl git unzip xz-utils zip libglu1-mesa clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev yq
+        sudo apt-get update -y
+        sudo apt-get install -y \
+          curl git unzip xz-utils zip libglu1-mesa clang cmake ninja-build \
+          pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
+
+    - name: Read Flutter version
+      shell: bash
+      run: |
+        FLUTTER_VERSION=$(cat .flutter-version)
+        echo "Using Flutter version: $FLUTTER_VERSION"
+        echo "FLUTTER_VERSION=$FLUTTER_VERSION" >> $GITHUB_ENV
 
     - name: Clone Flutter
       shell: bash
       run: |
-        # get Flutter version from pubspec.yaml
-        FLUTTER_VERSION="$(yq -r '.environment.flutter' pubspec.yaml)"
-
-        # Shallow-clone Flutter to reduce download size
-        git clone --depth 1 --branch $FLUTTER_VERSION https://github.com/flutter/flutter.git $RUNNER_TEMP/flutter
-
-        # Add Flutter to PATH
-        echo "$RUNNER_TEMP/flutter/bin" >> $GITHUB_PATH
+        git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+        echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
 
     - name: Install Flutter
       shell: bash
-      # Running "flutter doctor" will download Flutter's dependencies
       run: flutter doctor
-    
+
     - name: Build Linux App
       shell: bash
       run: |
         flutter config --enable-linux-desktop
         source linux/prep.sh
-        flutter build linux --build-name ${{ inputs.VERSION_NAME }} --build-number ${{ inputs.VERSION_CODE }}
+        flutter build linux \
+          --build-name "${{ inputs.VERSION_NAME }}" \
+          --build-number "${{ inputs.VERSION_CODE }}"
 
     - name: Install fpm
       shell: bash
       run: |
         sudo apt-get install -y ruby ruby-dev build-essential
         sudo gem install --no-document fpm
-    
+
     - name: Build .deb package
       shell: bash
       run: |
         fpm -s dir -t deb \
           -n pslab \
-          -v ${{ inputs.VERSION_NAME }} \
+          -v "${{ inputs.VERSION_NAME }}" \
           --prefix=/ \
           --depends libusb-1.0-0 \
           build/linux/arm64/release/bundle/bin/=/usr/bin \
@@ -69,7 +74,7 @@ runs:
       run: |
         fpm -s dir -t rpm \
           -n pslab \
-          -v ${{ inputs.VERSION_NAME }} \
+          -v "${{ inputs.VERSION_NAME }}" \
           --prefix=/ \
           --depends libusb1 \
           build/linux/arm64/release/bundle/bin/=/usr/bin \
@@ -83,4 +88,6 @@ runs:
       uses: actions/upload-artifact@v4
       with:
         name: linux-packages-arm64
-        path: "*.deb\n*.rpm"
+        path: |
+          *.deb
+          *.rpm
