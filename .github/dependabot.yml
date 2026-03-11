@@ -6,10 +6,19 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: "flutter"
+      - dependency-name: "sdk"
+    labels:
+      - "dependencies"
+      - "pub"
+
   - package-ecosystem: "gradle"
     directory: "/android/"
     schedule:
       interval: "daily"
+
   - package-ecosystem: "github-actions"
     directories:
       - "/.github/workflows"
