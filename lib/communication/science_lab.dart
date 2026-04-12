@@ -57,7 +57,7 @@ class ScienceLab {
     if (isDeviceFound()) {
       try {
         await mCommunicationHandler.open();
-        mPacketHandler = PacketHandler(500, mCommunicationHandler);
+        mPacketHandler = PacketHandler(1500, mCommunicationHandler);
       } catch (e) {
         logger.e(e);
       }
