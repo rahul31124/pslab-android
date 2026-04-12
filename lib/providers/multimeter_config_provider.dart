@@ -36,7 +36,7 @@ class MultimeterConfigProvider extends ChangeNotifier {
       await prefs.setString('multimeter_config', json.encode(_config.toJson()));
       logger.d("Saved MultimeterConfig: ${_config.toJson()}");
     } catch (e) {
-      logger.e("Error saving MultimeterConfig to prefs: $e");
+      logger.e("Error saving MultimeterConfigg to prefs: $e");
     }
   }
 
