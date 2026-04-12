@@ -23,10 +23,13 @@ jobs:
       code: ${{ steps.filter.outputs.code }}
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - id: filter
         uses: dorny/paths-filter@v3
         with:
+          base: ${{ github.event.pull_request.base.sha }}
           filters: |
             code:
               - '**.dart'
@@ -39,6 +42,8 @@ jobs:
 
   common:
     name: Common Build
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -58,7 +63,7 @@ jobs:
 
   android:
     name: Android Flutter Build
-    needs: [common, changes]
+    needs: changes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -73,10 +78,11 @@ jobs:
 
   ios:
     name: iOS Flutter Build
-    needs: [common, changes]
+    needs: changes
     runs-on: macos-latest
     steps:
       - name: Set up Xcode
+        if: needs.changes.outputs.code == 'true'
         uses: maxim-lobanov/setup-xcode@v1.7.0
         with:
           xcode-version: '16.4.0'
@@ -93,7 +99,7 @@ jobs:
 
   screenshots-android:
     name: Screenshots (Android)
-    needs: [changes]
+    needs: changes
     if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -108,7 +114,7 @@ jobs:
 
   screenshots-iphone:
     name: Screenshots (iPhone)
-    needs: [changes]
+    needs: changes
     if: needs.changes.outputs.code == 'true'
     runs-on: macos-latest
     timeout-minutes: 30
@@ -127,7 +133,7 @@ jobs:
 
   screenshots-ipad:
     name: Screenshots (iPad)
-    needs: [changes]
+    needs: changes
     if: needs.changes.outputs.code == 'true'
     runs-on: macos-latest
     timeout-minutes: 30
@@ -146,7 +152,7 @@ jobs:
 
   windows:
     name: Windows Flutter Build
-    needs: [common, changes]
+    needs: changes
     if: needs.changes.outputs.code == 'true'
     runs-on: windows-latest
     steps:
@@ -157,7 +163,7 @@ jobs:
 
   linux:
     name: Linux Flutter Build
-    needs: [common, changes]
+    needs: changes
     if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     steps:
@@ -168,7 +174,7 @@ jobs:
 
   linux-arm64:
     name: Linux ARM64 Flutter Build
-    needs: [common, changes]
+    needs: changes
     if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-24.04-arm
     steps:
@@ -179,7 +185,7 @@ jobs:
 
   macos:
     name: macOS Flutter Build
-    needs: [common, changes]
+    needs: changes
     if: needs.changes.outputs.code == 'true'
     runs-on: macos-latest
     steps:
