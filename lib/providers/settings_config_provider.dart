@@ -36,7 +36,7 @@ class SettingsConfigProvider extends ChangeNotifier {
       await prefs.setString('settings_config', json.encode(_config.toJson()));
       logger.d("Saved SettingsConfig: ${_config.toJson()}");
     } catch (e) {
-      logger.e("Error saving SettingsConfig to prefs: $e");
+      logger.e("Error saving SettingsConfig to prefs______________________________: $e");
     }
   }
 
