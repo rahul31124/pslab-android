@@ -19,25 +19,22 @@ jobs:
     name: Detect Changes
     runs-on: ubuntu-latest
     outputs:
-      is_code: ${{ steps.filter.outputs.code }}
+      is_code: ${{ steps.check.outputs.is_code }}
     steps:
       - uses: actions/checkout@v6
-      - uses: dorny/paths-filter@v3
-        id: filter
         with:
-          filters: |
-            code:
-              - '**'
-              - '!**/*.md'
-              - '!docs/**/*'
-              - '!**/*.png'
-              - '!**/*.jpg'
-              - '!**/*.jpeg'
-              - '!**/*.gif'
-              - '!**/*.svg'
-              - '!**/*.webp'
-              - '!**/*.txt'
-              - '!**/*.arb'
+          fetch-depth: 0
+
+      - id: check
+        run: |
+          # Diff the actual commit SHAs. 
+          # grep -vE removes your media/doc extensions. grep -v removes the docs folder.
+          # If anything is left over, it's code. If the output is empty, it's just docs.
+          if git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -vE '\.(md|png|jpg|jpeg|gif|svg|webp|txt|arb)$' | grep -v '^docs/'; then
+            echo "is_code=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_code=false" >> $GITHUB_OUTPUT
+          fi
 
   common:
     name: Common Build
