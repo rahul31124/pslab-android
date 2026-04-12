@@ -7,7 +7,7 @@ class OscilloscopeAxesScale {
   OscilloscopeAxesScale() {
     _yAxisScale = 16;
     _yAxisScaleMin = -16;
-    _yAxisScaleMax = 16;
+    _yAxisScaleMax = 17;
     _xAxisScale = 975;
   }
 
