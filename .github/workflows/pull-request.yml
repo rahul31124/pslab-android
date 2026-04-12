@@ -28,16 +28,16 @@ jobs:
           filters: |
             code:
               - '**'
-              - '!**.md'
-              - '!docs/**'
-              - '!**.png'
-              - '!**.jpg'
-              - '!**.jpeg'
-              - '!**.gif'
-              - '!**.svg'
-              - '!**.webp'
-              - '!**.txt'
-              - '!**.arb'
+              - '!**/*.md'
+              - '!docs/**/*'
+              - '!**/*.png'
+              - '!**/*.jpg'
+              - '!**/*.jpeg'
+              - '!**/*.gif'
+              - '!**/*.svg'
+              - '!**/*.webp'
+              - '!**/*.txt'
+              - '!**/*.arb'
 
   common:
     name: Common Build
