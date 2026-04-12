@@ -77,7 +77,7 @@ class _BarometerScreenState extends State<BarometerScreen> {
         _i2c = I2C(_scienceLab!.mPacketHandler);
       }
     } catch (e) {
-      logger.e('Error initializing ScienceLab: $e');
+      logger.e('Error initializing _____ScienceLab_____: $e');
     }
   }
 

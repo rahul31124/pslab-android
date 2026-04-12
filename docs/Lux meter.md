@@ -47,7 +47,7 @@ Configure view is used to control the lux meter by changing variuos parameters.
 4. Update period
     - The time delay between two successive sensor readings can be changed by this parameter. The range is from `100ms` to `1000ms`.  
 
-## How to Use
+## How to Use it
 
 The default sensor for the lux meter is the built-in sensor. If the android device contains the ambient light sensor, immediatly the data can be observed throught the data view. 
 When using a I2C connected lux sensor, the pin configuration for the sensor is as follows.

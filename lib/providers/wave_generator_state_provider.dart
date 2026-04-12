@@ -34,7 +34,7 @@ enum WaveConst {
 
 enum WaveData {
   freqMin(10),
-  dutyMin(0),
+  dutyMin(10),
   phaseMin(0),
   freqMax(5000),
   phaseMax(360),
