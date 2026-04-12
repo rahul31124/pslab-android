@@ -50,6 +50,6 @@ When writing a body, the blank line between the title and the body is required a
 The footer is used to reference issue tracker IDs.
 
 For example:
-Fixes #123
+Fixes #1234
 
 ***
