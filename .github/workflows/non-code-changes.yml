@@ -1,0 +1,77 @@
+name: Build
+
+on:
+  pull_request:
+    branches: ["flutter"]
+    paths:
+      - '**.md'
+      - 'docs/**'
+      - '**.png'
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.gif'
+      - '**.svg'
+      - '**.webp'
+      - '**.txt'
+      - '**.arb'
+
+jobs:
+  common:
+    name: Common Build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "non-code changes."
+
+  android:
+    name: Android Flutter Build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "non-code changes."
+
+  ios:
+    name: iOS Flutter Build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "non-code changes."
+
+  screenshots-android:
+    name: Screenshots (Android)
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "non-code changes."
+
+  screenshots-iphone:
+    name: Screenshots (iPhone)
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "non-code changes."
+
+  screenshots-ipad:
+    name: Screenshots (iPad)
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "non-code changes."
+
+  windows:
+    name: Windows Flutter Build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "non-code changes."
+  
+  linux:
+    name: Linux Flutter Build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "non-code changes."
+
+  linux-arm64:
+    name: Linux ARM64 Flutter Build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "non-code changes."
+
+  macos:
+    name: macOS Flutter Build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "non-code changes."
