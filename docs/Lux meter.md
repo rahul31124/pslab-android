@@ -1,6 +1,6 @@
 # How to use Lux meter
 
-## Table of Content
+## Table of Contents
 1. Introduction
 2. Layout
 3. Features
