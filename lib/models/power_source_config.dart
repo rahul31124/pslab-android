@@ -3,7 +3,7 @@ class PowerSourceConfig {
   final bool includeLocationData;
 
   const PowerSourceConfig({
-    this.loggingInterval = 1000,
+    this.loggingInterval = 100,
     this.includeLocationData = true,
   });
 
