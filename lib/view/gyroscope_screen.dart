@@ -77,7 +77,7 @@ class _GyroscopeScreenState extends State<GyroscopeScreen> {
       ),
       const InstrumentImage(
         imagePath: imagePath,
-        height: 200.0,
+        height: 210.0,
       ),
       InstrumentIntroText(
         text: appLocalizations.gyroscopeDesc,
