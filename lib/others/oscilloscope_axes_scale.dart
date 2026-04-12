@@ -8,7 +8,7 @@ class OscilloscopeAxesScale {
     _yAxisScale = 16;
     _yAxisScaleMin = -16;
     _yAxisScaleMax = 16;
-    _xAxisScale = 875;
+    _xAxisScale = 975;
   }
 
   double get yAxisScale => _yAxisScale;
