@@ -9,7 +9,7 @@
 4. How to Use  
 
 ## Introduction
-Pocket Science Lab contains a lux meter which can measure real time ambient light intensity. This lux meter can use either the `built-in ambient light sensor` in your android device, `BH-1750` or `TSL-2561` lux sensors. The PSLab android application communicates with the Pocket Science Lab using `I2C` bus to read the two externally connected sensors. This document will help a user on available functionalities and how to use Pocket Science Lab with PSLab android application.  
+Pocket Science Lab contains a lux meter which can measure real time ambient light intensity. This lux meter can use either the `built-in ambient light sensor` in your android device, `BH-1750` or `TSL-2561` lux sensors. The PSLab android application communicates with the Pocket Science Lab using `I2C` bus to read the two externally connected sensors. This document will help a user on available functionalities and how to use Pocket Science Lab with PSLab application.  
 
 ## Layout
 
