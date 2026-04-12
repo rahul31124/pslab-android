@@ -506,6 +506,9 @@ Despite any reason, follow the steps given below to squash all commits into one 
 
 `$ git push -f origin <branch-name>`
 
+//////////
+
+
 ### Branch Policy
 
 We have the following branches
