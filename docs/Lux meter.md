@@ -50,7 +50,7 @@ Configure view is used to control the lux meter by changing variuos parameters.
 ## How to Use it
 
 The default sensor for the lux meter is the built-in sensor. If the device contains the ambient light sensor, immediatly the data can be observed throught the data view. 
-When using a I2C connected lux sensor, the pin configuration for the sensor is as follows.
+When using a I2C connected lux sensor, the pin configurations for the sensor is as follows.
 
 Pin in sensor | Pin in PSLab
 --- | ---
