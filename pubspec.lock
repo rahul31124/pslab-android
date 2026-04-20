@@ -193,6 +193,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  dart_libusb:
+    dependency: transitive
+    description:
+      name: dart_libusb
+      sha256: "6e3e6999ee09cde919af10931e9476202ac89b37e3b88fe8ef458bc6ae59bfd8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   dart_polylabel2:
     dependency: transitive
     description:
@@ -301,10 +309,10 @@ packages:
     dependency: "direct main"
     description:
       name: flusbserial
-      sha256: "2085c951d4cd9ba3c022563300a9f83e46460e5c8434f34a65ca644a9c1efced"
+      sha256: f8d5d893ccc0581e56a90b44c777bc88f6c0e7caf3f4f9dd4569ce0e3fa5e9dd
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.1"
+    version: "0.5.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -628,14 +636,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
-  libusb:
-    dependency: transitive
-    description:
-      name: libusb
-      sha256: ca24c95f475eb53fac4dcdcd754b5a0b1b04d0bbf744f61163ae5d59197471c6
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.23+2"
   light:
     dependency: "direct main"
     description:
