@@ -664,5 +664,13 @@
     "pin_cap_desc": "Capacitance Measurement Pin",
     "pin_res_name": "RES",
     "pin_res_desc": "Resistance Measurement Pin",
-    "stopSound" : "Stop Sound"
+    "stopSound" : "Stop Sound",
+    "tsl2561" : "TSL2561",
+    "full": "Full Spectrum",
+    "infrared": "Infrared",
+    "infraredRaw" : "Infrared (raw)",
+    "visibleLight": "Visible Light",
+    "visibleLightRaw" : "Visible Light (raw)",
+    "luxRaw" : "Luminosity (lux/raw)",
+    "raw" : "raw"
 }
