@@ -55,7 +55,7 @@ class TSL2561Provider extends ChangeNotifier {
     try {
       if (i2c == null || scienceLab == null) {
         onError(appLocalizations.pslabNotConnected);
-        logger.w('I2C or ScienceLab not available');
+        logger.w('I2C or ScienceLab not ae');
         return;
       }
 
