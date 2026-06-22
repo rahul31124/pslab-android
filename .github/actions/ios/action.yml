@@ -16,7 +16,7 @@ runs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        cache: false # TODO set to <true> after https://github.com/actions/runner/issues/449 is fixed
+        cache: false
         flutter-version-file: pubspec.yaml
 
     - name: Update Podfile
@@ -26,20 +26,29 @@ runs:
         flutter pub get
         pod install --repo-update
 
-    - name: Build iOS IPA (No code signing for PRs)
+    - name: Build Unsigned iOS App (For PRs)
       if: ${{ github.event_name == 'pull_request' }}
       shell: bash
       env:
         VERSION_NAME: ${{ inputs.VERSION_NAME }}
         VERSION_CODE: ${{ inputs.VERSION_CODE }}
       run: |
-        flutter build ipa --no-codesign --build-name $VERSION_NAME --build-number $VERSION_CODE
+        # 1. Build the raw iOS binary (Note: using 'ios', not 'ipa')
+        flutter build ios --release --no-codesign --build-name "$VERSION_NAME" --build-number "$VERSION_CODE"
 
-    - name: Build iOS IPA (With Code Signing)
+        # 2. Package it into an unsigned .ipa manually
+        cd build/ios/iphoneos
+        mkdir Payload
+        cp -r Runner.app Payload/
+        zip -qr pslab-unsigned.ipa Payload/
+        mv pslab-unsigned.ipa ../../../
+
+    - name: Build Signed iOS IPA (For Production)
       if: ${{ github.event_name != 'pull_request' }}
       shell: bash
       env:
         VERSION_NAME: ${{ inputs.VERSION_NAME }}
         VERSION_CODE: ${{ inputs.VERSION_CODE }}
       run: |
-        flutter build ipa --build-name $VERSION_NAME --build-number $VERSION_CODE
+        # This will only succeed if the FOSSASIA repository certificates are present
+        flutter build ipa --build-name "$VERSION_NAME" --build-number "$VERSION_CODE"
