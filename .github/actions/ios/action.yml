@@ -22,7 +22,7 @@ runs:
     - name: Update Podfile
       shell: bash
       run: |
-        cd ./iOS
+        cd ./ios
         flutter pub get
         pod install --repo-update
 
@@ -33,7 +33,7 @@ runs:
         VERSION_NAME: ${{ inputs.VERSION_NAME }}
         VERSION_CODE: ${{ inputs.VERSION_CODE }}
       run: |
-        # 1. Build the raw iOS binary (Note: using 'ios', not 'ipa')
+        # 1. Build the raw iOS binary
         flutter build ios --release --no-codesign --build-name "$VERSION_NAME" --build-number "$VERSION_CODE"
 
         # 2. Package it into an unsigned .ipa manually
@@ -52,3 +52,12 @@ runs:
       run: |
         # This will only succeed if the FOSSASIA repository certificates are present
         flutter build ipa --build-name "$VERSION_NAME" --build-number "$VERSION_CODE"
+
+    - name: Store IPA file
+      uses: actions/upload-artifact@v7
+      with:
+        name: iOS IPA Generated
+        path: |
+          pslab-unsigned.ipa
+          build/ios/ipa/*.ipa
+        if-no-files-found: ignore
