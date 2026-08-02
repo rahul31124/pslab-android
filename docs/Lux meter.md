@@ -1,66 +1,458 @@
-# How to use Lux meter
+# PSLab App
 
-## Table of Content
-1. Introduction
-2. Layout
-3. Features
-    - *Data*
-    - *Configure*
-4. How to Use  
+Repository for the PSLab App for performing experiments with the [Pocket Science Lab](https://pslab.io) open-hardware platform.
 
-## Introduction
-Pocket Science Lab contains a lux meter which can measure real time ambient light intensity. This lux meter can use either the `built-in ambient light sensor` in your android device, `BH-1750` or `TSL-2561` lux sensors. The PSLab android application communicates with the Pocket Science Lab using `I2C` bus to read the two externally connected sensors. This document will help a user on available functionalities and how to use Pocket Science Lab with PSLab android application.  
+[![Build](https://github.com/fossasia/pslab-app/actions/workflows/pull-request.yml/badge.svg)](https://github.com/fossasia/pslab-app/actions/workflows/pull-request.yml)
+[![Mailing List](https://img.shields.io/badge/Mailing%20List-FOSSASIA-blue.svg)](https://groups.google.com/forum/#!forum/pslab-fossasia)
+![GitHub repo size](https://img.shields.io/github/repo-size/fossasia/pslab-app)
+[![Gitter](https://badges.gitter.im/fossasia/pslab.svg)](https://gitter.im/fossasia/pslab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Twitter Follow](https://img.shields.io/twitter/follow/pslabio.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/pslabio)
+[![Translation status](https://hosted.weblate.org/widgets/fossasia/-/pslab-app/svg-badge.svg)](https://hosted.weblate.org/projects/fossasia/pslab-app/)
 
-## Layout
+This repository contains the **PSLab** application, a cross-platform app for performing science and engineering experiments with the **Pocket Science Lab (PSLab)** device. PSLab is an open-source hardware platform that combines multiple laboratory instruments into a single portable device, including an oscilloscope, waveform generator, frequency counter, programmable voltage and current source, logic analyzer, and data logger. The application provides an intuitive interface for interacting with these instruments across multiple platforms.
+Our website is at https://pslab.io.
 
-The layout of the oscilloscope graphical user interface contains two main parts. 
-1. Data view
-2. Configuration
+## Download
 
-<table>
+The PSLab app is available for **Android**, **iOS**, **Windows**, **macOS**, **Linux**, and **Web**.
+
+- Store listings and install guides: [PSLab Application documentation](https://docs.pslab.io/application/Readme.html)
+- Development builds (direct downloads): [Download page](https://htmlpreview.github.io/?https://raw.githubusercontent.com/fossasia/pslab-app/refs/heads/app/index.html)
+
+Sign up for the latest updates and test new features early by joining our [beta program](https://play.google.com/apps/testing/io.pslab).
+
+## Buy
+
+* You can get a Pocket Science Lab device from the [FOSSASIA Shop](https://fossasia.com).
+* More resellers are listed on the [PSLab website](https://pslab.io/shop/).
+
+## Communication
+
+* The PSLab [chat channel is on Gitter](https://gitter.im/fossasia/pslab).
+* Please also join us on the [PSLab Mailing List](https://groups.google.com/forum/#!forum/pslab-fossasia).
+
+## Roadmap
+
+- [x] Establish communication between the cross-platform application and the PSLab device.
+- [x] Implement core scientific instruments and expose PSLab hardware functionality.
+- [ ] Add wireless connectivity (currently under development).
+
+## Screenshots
+
+  <table>
+      <tr>
+       <td><img src="/docs/images/view_device_not_found.png"></td>
+       <td><img src="/docs/images/view_home_screen.png"></td>
+       <td><img src="/docs/images/view_instrument_panel.png"></td>
+       <td><img src="/docs/images/view_about_us.png"></td>
+      </tr>
+  </table>
+  <table>
+      <tr>
+       <td><img src="/docs/images/instrument_oscilloscope_guide.png"></td>
+       <td><img src="/docs/images/instrument_logic_analyzer_guide.png"></td>
+      </tr>
+    </table>
+  <table>
     <tr>
-        <td><img src="/docs/images/instrument_luxmeter_guide.png"></td>
-        <td><img src="/docs/images/instrument_luxmeter_view.png"></td>
+     <td><img src="/docs/images/view_pin_layout_front.png"></td>
+     <td><img src="/docs/images/view_pin_layout_back.png"></td>
+     <td><img src="/docs/images/view_side_navigation_drawer.png"></td>
+     <td><img src="/docs/images/instrument_luxmeter_guide.png"></td>
     </tr>
-</table>
-<table>
+  </table>
+  <table>
     <tr>
-        <td><img src="/docs/images/instrument_luxmeter_config.png"></td>
-        <td><img src="/docs/images/view_datalogger_play.png"></td>
+     <td><img src="/docs/images/instrument_oscilloscope_channel_view.png"></td>
+     <td><img src="/docs/images/instrument_oscilloscope_audiojack_view.png"></td>
     </tr>
-</table>
+  </table>
+  <table>
+    <tr>
+     <td><img src="/docs/images/instrument_wave_generator_analog.png"></td>
+     <td><img src="/docs/images/instrument_wave_generator_digital.png"></td>
+     <td><img src="/docs/images/instrument_power_source_view.png"></td>
+     <td><img src="/docs/images/instrument_multi_meter_view.png"></td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+     <td><img src="/docs/images/instrument_barometer_view.png"></td>
+     <td><img src="/docs/images/view_log_map_location.png"></td>
+     <td><img src="/docs/images/view_data_logger.png"></td>
+     <td><img src="/docs/images/view_create_config_file.png"></td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+     <td><img src="/docs/images/instrument_accelerometer_view.png" width = "500"></td>
+     <td><img src="/docs/images/instrument_gyro_view.png" width = "500"></td>
+     <td><img src="/docs/images/instrument_compass_view.png" width = "500"></td>
+     <td><img src="/docs/images/instrument_thermo_view.png" width = "500"></td>
+    </tr>
+     <tr>
+     <td><img src="/docs/images/instrument_sensors_view.png" width = "500"></td>
+     <td><img src="/docs/images/instrument_gas_sensor_view.png" width = "500"></td>
+     <td><img src="/docs/images/instrument_dust_sensor_view.png" width = "500"></td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+     <td><img src="/docs/images/instrument_robotic_arm_controller_view.png" width = "500"/></td>
+     <td><img src="/docs/images/instrument_logical_analyzer_view.png" width = "500"/></td>
+    </tr>
+  </table>
+
 
 ## Features
-In the lux meter there are two views that you can navigate to using a bottom navigation bar. 
+|   ***Feature***        | **Description**                                                   | **Status**         |
+|------------------------|-------------------------------------------------------------------|--------------------|
+| Home Screen            | Show status and version of PSLab device                           | :heavy_check_mark: |
+| Instruments            | Exposes PSLab instruments like Oscilloscope, etc                  | :heavy_check_mark: |
+| Oscilloscope           | Shows variation of analog signals                                 | :heavy_check_mark: |
+| Multimeter             | Measures voltage, current, resistance and capacitance             | :heavy_check_mark: |
+| Logical Analyzer       | Captures and displays signals from digital system                 | :heavy_check_mark: |
+| Wave Generator         | Generates arbitrary analog and digital waveforms                  | :heavy_check_mark: |
+| Power Source           | Generates programmable voltage and currents	                     | :heavy_check_mark: |
+| Luxmeter              | Measures the ambient light intensity                               | :heavy_check_mark: |
+| Barometer             | Measures the Pressure                                              | :heavy_check_mark: |
+| Accelerometer          | Measures the acceleration of the device                           | :heavy_check_mark: |
+| Gyrometer             | Measures the rate of rotation                                      | :heavy_check_mark: |
+| Compass                | Measures the absolute rotation relative to earth magnetic poles   | :heavy_check_mark: |
+| Thermometer            | Measures the ambient temperature                                  | :heavy_check_mark: |
+| Gas Sensor             | Detects gases, including NH3, NOx, alcohol, benzene, smoke and CO2| :heavy_check_mark: |
+| Robotic Arm Controller | Allows to control 4 servo motors of the robotic arm independently | :heavy_check_mark: |
+| OLED Display          | Displays graphics, animations, GIFs, and retro games on external I²C OLED displays | :heavy_check_mark: |
+| Sound Meter           | Measures ambient sound levels using the device microphone                           | :heavy_check_mark: |
 
-### Data
-Data view is to display the light value read from either the built-in sensor or I2C connected lux sensor. This view consist with a value guage, chart plot and a statistic panel. Statistics shows the maximum, minimum and average lux values.
-
-### Configure
-Configure view is used to control the lux meter by changing variuos parameters.
-1. Select sensor
-    - Used to select between sensors built-in, BH-1750 and TSL-2561
-2. Gain range
-    - When using sensors via PSLab device, can change the gain of the sensor to amplify the signal captured from the sensor. For the BH-1750 can select from `500`, `1000` and `4000`. For the TSL-2561 can choose from `1` and `16`. 
-3. High limit
-    - User can set a limit to high value of lux so that when it exceeds, the guage will notify using a red indicator. 
-4. Update period
-    - The time delay between two successive sensor readings can be changed by this parameter. The range is from `100ms` to `1000ms`.  
+**Supported Devices:**
+- PSLab v5: VendorID `04d8`, ProductID `00df`
+- PSLab v6: VendorID `10c4`, ProductID `ea60`
 
 ## How to Use
 
-The default sensor for the lux meter is the built-in sensor. If the android device contains the ambient light sensor, immediatly the data can be observed throught the data view. 
-When using a I2C connected lux sensor, the pin configuration for the sensor is as follows.
+### Android
 
-Pin in sensor | Pin in PSLab
---- | ---
-VCC/VIN | VDD
-GND | GND
-SCL | SCL
-SDA | SDA
+To use the PSLab device with Android, you need:
 
-<img src="/docs/images/bh1750_schematic.png"> 
+- A PSLab device
+- A USB OTG cable
+- An Android device with USB Host (OTG) support
+- The PSLab Android application
 
-The pin configuration for the TSL-2561 is also as same as above.
+Connect the PSLab device to your Android device using the OTG cable. The application will automatically detect the device and establish communication.
 
-Change the parameters `update period`, `high limit` and `gain range` and observe the differences.
+### iOS
+
+iOS support currently communicates with the PSLab device over **Wi-Fi** using an **ESP-01** module. This functionality is currently **under development**.
+
+### Windows, macOS, Linux, and Web
+
+These platforms communicate with the PSLab device over USB serial. Before connecting the device, install the **CP210x USB-to-UART Bridge Virtual COM Port (VCP) drivers** for your operating system.
+
+Download the drivers from:
+
+https://www.silabs.com/software-and-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads
+
+
+## Permissions
+
+### Android
+
+The application requests the following permissions:
+
+| Permission | Purpose |
+|------------|---------|
+| Location | GPS logging and location-based features |
+| Microphone | Audio oscilloscope functionality |
+| Internet | Network connectivity |
+| Storage | Reading and writing logged data |
+| USB Host | Communication with PSLab hardware |
+| Motion Sensors | Compass and motion-based features |
+| Ambient Temperature Sensor | Device temperature measurements (optional) |
+
+### iOS
+
+The application requests the following permissions:
+
+| Permission | Purpose |
+|------------|---------|
+| Microphone | Audio oscilloscope functionality |
+| Motion Sensors | Compass and motion-based features |
+| Storage | Reading and writing logged data |
+| Location | GPS logging and location-based features |
+| Internet | Network connectivity |
+
+### Desktop (Windows, macOS, Linux)
+
+No runtime permissions are required.
+
+> **Linux:** Users must install the provided `udev` rules and add themselves to the `dialout` group to access USB serial devices.
+
+### Web
+
+No runtime permissions are required.
+
+
+## Video Demo
+  * [PSLab Android App Overview](https://www.youtube.com/watch?v=JJfsF0b8M8k).
+  * [Observing Sound Waveforms Using PSLab Device](https://www.youtube.com/watch?v=5bxDd1PiOMQ).
+  * [Real-time Sensor Data Logging Using Pocket Science Lab](https://www.youtube.com/watch?v=_A8h6o-UcNo).
+  * [Generating and Observing Waveforms Using Pocket Science Lab](https://www.youtube.com/watch?v=Ua9_OCR4p8Y).
+
+
+## Development Environment Setup
+
+### Project Overview
+
+This is a **Cross-platform application** build with **flutter** and **rust** that supports:
+- **Android** (primary platform)
+- **iOS** (via Wi-Fi only)
+- **Linux** 
+- **macOS**
+- **Windows**
+- **Web**
+
+### Required Software 
+
+**Flutter & Dart**
+- Flutter (stable channel)
+- Dart (bundled with Flutter)
+
+**Java**
+- Java (LTS version required for Android builds)
+  
+**Rust**
+- Rust (stable toolchain required for Backend)
+
+### Flutter
+
+The user interface and most of the application state management are implemented in **Flutter**. Flutter enables the application to run on multiple platforms from a single codebase while maintaining a consistent user experience.
+
+
+**Why Flutter?**
+- Cross-platform development for Android, iOS, Windows, macOS, Linux, and Web.
+- A rich ecosystem of UI libraries and packages.
+- High-performance rendering with a native-like user experience.
+- Hot reload for faster development and debugging.
+- Excellent integration with native code through the **Foreign Function Interface (FFI)**, making it easy to communicate with the Rust-based serial communication backend.
+
+  For setting up the Flutter development environment refer to:
+
+- [docs/rust.md](https://github.com/fossasia/pslab-app/blob/main/docs/flutter.md)
+
+### Rust 
+
+The application uses a **Rust-based serial communication backend** to interface with PSLab hardware. Instead of relying directly on platform-specific hardware communication dependencies, all low-level serial communication is handled by the Rust backend.
+
+**Why Rust?**
+- Near bare-metal performance with minimal runtime overhead.
+- Memory safety without requiring a garbage collector.
+- Reliable and efficient handling of high-frequency serial data streams.
+- Cross-platform support through a shared native backend for Flutter.
+- Better maintainability for performance-critical hardware communication code.
+
+For setting up the Rust development environment and building the backend, refer to:
+
+- [docs/rust.md](https://github.com/fossasia/pslab-app/blob/main/docs/rust.md)
+
+## Project Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/fossasia/pslab-app.git
+cd pslab-app
+```
+
+### 2. Install Dependencies
+
+```bash
+flutter pub get
+```
+
+### 3. Platform-Specific Setup for Testing locally
+
+#### Android
+
+No additional setup is required.
+
+#### iOS (macOS only)
+
+Install the CocoaPods dependencies:
+
+```bash
+cd ios
+pod install
+cd ..
+```
+
+#### Windows
+
+No additional setup is required. If Windows does not automatically detect your PSLab device, install the appropriate USB drivers.
+
+#### Linux
+
+Install the provided `udev` rules and grant your user access to serial devices:
+
+```bash
+sudo cp linux/99-pslab.rules /etc/udev/rules.d/
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+
+sudo usermod -a -G dialout $USER
+```
+
+Log out and log back in for the group changes to take effect.
+
+## Running the Application
+
+### Run the App
+The following commands use the **CLI**.
+List available devices:
+
+```bash
+flutter devices
+```
+
+Run the application:
+
+```bash
+flutter run
+```
+
+### Build
+
+#### Debug
+
+Use for development and debugging:
+
+```bash
+flutter build apk --debug
+```
+
+#### Profile
+
+Use for performance testing and local release-like builds:
+
+```bash
+flutter build apk --profile
+```
+
+> **Note:** Release builds are generated automatically through CI stored in the **app** branch.
+
+## Testing
+
+Run all tests:
+
+```bash
+flutter test
+```
+
+Run integration tests:
+
+```bash
+flutter test integration_test/
+```
+
+### Troubleshooting
+
+**Common Issues:**
+
+1. **USB permissions on Linux:**
+   - Ensure udev rules are installed: `ls -la /etc/udev/rules.d/99-pslab.rules`
+   - Check user is in dialout group: `groups $USER`
+
+2. **Flutter version mismatch:**
+   ```bash
+   flutter channel stable
+   flutter upgrade
+   flutter pub get
+   ```
+
+3. **iOS build issues:**
+   ```bash
+   cd ios
+   pod deintegrate
+   pod install
+   cd ..
+   flutter clean
+   flutter pub get
+   ```
+
+4. **Android build issues:**
+   - Ensure an LTS Java version is installed: java -version 
+   - Clean build: `flutter clean && flutter pub get`
+
+5. **Git dependency issues:**
+   ```bash
+   flutter pub deps
+   flutter pub get
+   ```
+
+### Verify Setup
+
+Follow the steps below to confirm that your local development environment is correctly configured.
+
+#### 1. Check Flutter installation
+```bash
+flutter doctor
+ ```
+Resolve any critical issues reported by the command.
+
+#### 2. Install dependencies and run tests
+```bash
+flutter pub get
+flutter test
+ ```
+
+#### 3. Run the application
+```bash
+flutter run
+ ```
+Run the app on a connected physical device, emulator, or desktop target.
+
+
+## Translations
+
+We use [Weblate](https://hosted.weblate.org/projects/fossasia/pslab-app/) for managing translations.
+
+If you want to help translate the app into your language, please visit the [PSLab App project on Weblate](https://hosted.weblate.org/projects/fossasia/pslab-app/).
+
+### Technical Details
+The app uses the standard Flutter `flutter_localizations` package.
+* **Location:** Translation files are stored in `lib/l10n/` in `.arb` (Application Resource Bundle) format.
+* **Template:** The source of truth is `lib/l10n/app_en.arb`.
+* **Contribution:** While we prefer translations submitted via Weblate to avoid merge conflicts, you can also manually edit the `.arb` files and submit a Pull Request.
+
+
+## Contributions Best Practices
+
+### Code Practices
+
+Please follow these best practices to make the review process easier for both contributors and reviewers. This allows us to focus on code quality.
+
+- Follow the pull request template whenever you create a pull request.
+- Always reference the related issue number at the top of the pull request description.
+- If an issue does not already exist, create one before opening the pull request and link it in the description.
+- Include screenshots or a short video demonstrating your changes whenever applicable, especially for UI-related changes.
+- Always format your Dart code before committing:
+
+  ```bash
+  dart format .
+  ```
+
+- Ensure your code builds successfully and is free of warnings before pushing. Pull requests with build issues or warnings may fail the CI checks.
+- Enable **GitHub Copilot Review** or **ChatGPT Codex Review** in your GitHub account. The AI reviewer may provide useful suggestions on your pull request. Address the relevant comments.
+
+### Branch Policy
+
+We have the following branches
+* **main** All development goes on in this branch. If you're making a contribution, you are supposed to make a pull request to Main. Make sure it passes a build checks.
+* **development-legacy** Contains the legacy native Android app code.
+* **app** Contains automatically generated build artifacts (APK, EXE, IPA, DMG, DEB, etc.) for testing. Anyone can download and install these artifacts directly without needing to build the project locally.
+
+
+## License
+
+This project is currently licensed under the Apache License 2.0. A copy of [LICENSE](LICENSE) is to be present along with the source code. To obtain the software under a different license, please contact FOSSASIA.
