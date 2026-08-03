@@ -39,70 +39,71 @@ Sign up for the latest updates and test new features early by joining our [beta 
 
 ## Screenshots
 
-  <table>
-      <tr>
-       <td><img src="/docs/images/view_device_not_found.png"></td>
-       <td><img src="/docs/images/view_home_screen.png"></td>
-       <td><img src="/docs/images/view_instrument_panel.png"></td>
-       <td><img src="/docs/images/view_about_us.png"></td>
-      </tr>
-  </table>
-  <table>
-      <tr>
-       <td><img src="/docs/images/instrument_oscilloscope_guide.png"></td>
-       <td><img src="/docs/images/instrument_logic_analyzer_guide.png"></td>
-      </tr>
-    </table>
-  <table>
+<table>
     <tr>
-     <td><img src="/docs/images/view_pin_layout_front.png"></td>
-     <td><img src="/docs/images/view_pin_layout_back.png"></td>
-     <td><img src="/docs/images/view_side_navigation_drawer.png"></td>
-     <td><img src="/docs/images/instrument_luxmeter_guide.png"></td>
+        <td><img src="/docs/readme_images/instrument.jpg"></td>
+        <td><img src="/docs/readme_images/nav_drawer.jpg"></td>
+        <td><img src="/docs/readme_images/pin_front.jpg"></td>
+        <td><img src="/docs/readme_images/pin_back.jpg"></td>
     </tr>
-  </table>
-  <table>
-    <tr>
-     <td><img src="/docs/images/instrument_oscilloscope_channel_view.png"></td>
-     <td><img src="/docs/images/instrument_oscilloscope_audiojack_view.png"></td>
-    </tr>
-  </table>
-  <table>
-    <tr>
-     <td><img src="/docs/images/instrument_wave_generator_analog.png"></td>
-     <td><img src="/docs/images/instrument_wave_generator_digital.png"></td>
-     <td><img src="/docs/images/instrument_power_source_view.png"></td>
-     <td><img src="/docs/images/instrument_multi_meter_view.png"></td>
-    </tr>
-  </table>
-  <table>
-    <tr>
-     <td><img src="/docs/images/instrument_barometer_view.png"></td>
-     <td><img src="/docs/images/view_log_map_location.png"></td>
-     <td><img src="/docs/images/view_data_logger.png"></td>
-     <td><img src="/docs/images/view_create_config_file.png"></td>
-    </tr>
-  </table>
-  <table>
-    <tr>
-     <td><img src="/docs/images/instrument_accelerometer_view.png" width = "500"></td>
-     <td><img src="/docs/images/instrument_gyro_view.png" width = "500"></td>
-     <td><img src="/docs/images/instrument_compass_view.png" width = "500"></td>
-     <td><img src="/docs/images/instrument_thermo_view.png" width = "500"></td>
-    </tr>
-     <tr>
-     <td><img src="/docs/images/instrument_sensors_view.png" width = "500"></td>
-     <td><img src="/docs/images/instrument_gas_sensor_view.png" width = "500"></td>
-     <td><img src="/docs/images/instrument_dust_sensor_view.png" width = "500"></td>
-    </tr>
-  </table>
-  <table>
-    <tr>
-     <td><img src="/docs/images/instrument_robotic_arm_controller_view.png" width = "500"/></td>
-     <td><img src="/docs/images/instrument_logical_analyzer_view.png" width = "500"/></td>
-    </tr>
-  </table>
+</table>
 
+<table>
+    <tr>
+        <td><img src="/docs/readme_images/instrument_oscilloscope_guide.jpg"></td>
+        <td><img src="/docs/readme_images/instrument_logic_analyzer_guide.jpg"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><img src="/docs/readme_images/oscilloscope.jpg"></td>
+        <td><img src="/docs/readme_images/logic_analyzer.jpg"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><img src="/docs/readme_images/wave_sin.jpg"></td>
+        <td><img src="/docs/readme_images/wave_sqaure.jpg"></td>
+        <td><img src="/docs/readme_images/multimeter.jpg"></td>
+        <td><img src="/docs/readme_images/power_source.jpg"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><img src="/docs/readme_images/sensor.jpg"></td>
+        <td><img src="/docs/readme_images/gyroscope.jpg"></td>
+        <td><img src="/docs/readme_images/acc_meter.jpg"></td>
+        <td><img src="/docs/readme_images/oled_display"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><img src="/docs/readme_images/robotic_arm.jpg"></td>
+        <td><img src="/docs/readme_images/oscilloscope_mic.jpg"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><img src="/docs/readme_images/compass.jpg"></td>
+        <td><img src="/docs/readme_images/sensor.jpg"></td>
+        <td><img src="/docs/readme_images/soundmeter.jpg"></td>
+        <td><img src="/docs/readme_images/logged_data.jpg"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><img src="/docs/readme_images/logged_data_chart.jpg"></td>
+        <td><img src="/docs/readme_images/faq.jpg"></td>
+        <td><img src="/docs/readme_images/settings.jpg"></td>
+        <td><img src="/docs/readme_images/about.jpg"></td>
+    </tr>
+</table>
 
 ## Features
 |   ***Feature***        | **Description**                                                   | **Status**         |
