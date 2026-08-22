@@ -28,16 +28,22 @@ class _GyroscopeScreenState extends State<GyroscopeScreen> {
   late GyroscopeProvider _provider;
   late GyroscopeConfigProvider _configProvider;
 
+  String? _lastActiveSensor;
+
   @override
   void initState() {
     super.initState();
     _provider = GyroscopeProvider();
     _configProvider = GyroscopeConfigProvider();
+
     _provider.onPlaybackEnd = () {
       if (mounted && Navigator.canPop(context)) {
         Navigator.pop(context);
       }
     };
+
+    _configProvider.addListener(_handleConfigChange);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         if (widget.playbackData != null) {
@@ -50,8 +56,21 @@ class _GyroscopeScreenState extends State<GyroscopeScreen> {
     });
   }
 
+  void _handleConfigChange() {
+    if (!mounted || widget.playbackData != null) return;
+
+    final currentSensor = _configProvider.config.activeSensor;
+
+    if (_lastActiveSensor != currentSensor) {
+      _lastActiveSensor = currentSensor;
+      _provider.initializeSensors();
+    }
+  }
+
   @override
   void dispose() {
+    _configProvider.removeListener(_handleConfigChange);
+    _provider.disposeSensors();
     _provider.dispose();
     super.dispose();
   }
@@ -79,6 +98,11 @@ class _GyroscopeScreenState extends State<GyroscopeScreen> {
       ),
       InstrumentIntroText(
         text: appLocalizations.gyroscopeDesc,
+      ),
+      InstrumentCompatibilitySection(
+        phoneSupported: true,
+        pslabOptionalSensor: true,
+        note: appLocalizations.gyroscopeCompatNote,
       ),
     ];
   }
@@ -194,24 +218,47 @@ class _GyroscopeScreenState extends State<GyroscopeScreen> {
                     }
                   : null,
               body: SafeArea(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: GyroscopeCard(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    const double kPerCardMin = 155.0;
+                    const double kPerCardScrollHeight = 220.0;
+
+                    final double available = constraints.maxHeight;
+                    final bool needsScroll = available < kPerCardMin * 3;
+
+                    final List<Widget> cards = [
+                      GyroscopeCard(
                           color: xOrientationChartLineColor,
                           axis: appLocalizations.xAxis),
-                    ),
-                    Expanded(
-                      child: GyroscopeCard(
+                      GyroscopeCard(
                           color: yOrientationChartLineColor,
                           axis: appLocalizations.yAxis),
-                    ),
-                    Expanded(
-                      child: GyroscopeCard(
+                      GyroscopeCard(
                           color: zOrientationChartLineColor,
                           axis: appLocalizations.zAxis),
-                    ),
-                  ],
+                    ];
+
+                    if (needsScroll) {
+                      return SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            for (final card in cards)
+                              SizedBox(
+                                height: kPerCardScrollHeight,
+                                child: card,
+                              ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    return Column(
+                      children: [
+                        for (final card in cards) Expanded(child: card),
+                      ],
+                    );
+                  },
                 ),
               ),
             );

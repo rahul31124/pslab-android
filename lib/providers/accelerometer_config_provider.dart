@@ -58,7 +58,7 @@ class AccelerometerConfigProvider extends ChangeNotifier {
     _saveConfigToPrefs();
   }
 
-  void updateSensorGain(int sensorGain) {
+  void updateSensorGain(double sensorGain) {
     _config = _config.copyWith(sensorGain: sensorGain);
     notifyListeners();
     _saveConfigToPrefs();
@@ -66,6 +66,12 @@ class AccelerometerConfigProvider extends ChangeNotifier {
 
   void updateIncludeLocationData(bool includeLocationData) {
     _config = _config.copyWith(includeLocationData: includeLocationData);
+    notifyListeners();
+    _saveConfigToPrefs();
+  }
+
+  void updateAutoScale(bool autoScale) {
+    _config = _config.copyWith(autoScale: autoScale);
     notifyListeners();
     _saveConfigToPrefs();
   }

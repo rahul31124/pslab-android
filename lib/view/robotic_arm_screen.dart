@@ -15,7 +15,12 @@ import 'package:pslab/view/widgets/guide_widget.dart';
 import 'widgets/servo_card.dart';
 
 class RoboticArmScreen extends StatefulWidget {
-  const RoboticArmScreen({super.key});
+  final List<List<dynamic>>? importedData;
+
+  const RoboticArmScreen({
+    super.key,
+    this.importedData,
+  });
 
   @override
   State<RoboticArmScreen> createState() => _RoboticArmScreenState();
@@ -39,6 +44,11 @@ class _RoboticArmScreenState extends State<RoboticArmScreen> {
     ];
     provider = RoboticArmStateProvider();
     provider.initialize();
+    if (widget.importedData != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await provider.importTimelineData(widget.importedData!);
+      });
+    }
 
     provider.onPlaybackEnd = () {
       showDialog(
@@ -75,6 +85,10 @@ class _RoboticArmScreenState extends State<RoboticArmScreen> {
       ),
       InstrumentIntroText(
         text: appLocalizations.roboticArmConnection,
+      ),
+      InstrumentCompatibilitySection(
+        pslabRequired: true,
+        note: appLocalizations.roboticArmCompatNote,
       ),
     ];
   }

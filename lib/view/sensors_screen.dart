@@ -10,6 +10,7 @@ import 'package:pslab/view/vl53l0x_screen.dart';
 import 'package:pslab/view/apds9960_screen.dart';
 import 'package:pslab/view/tsl2561_screen.dart';
 import 'package:pslab/view/mpu6050_screen.dart';
+import 'package:pslab/view/mpu925x_screen.dart';
 import 'package:pslab/view/max30102_screen.dart';
 import 'package:pslab/view/hmc5883l_screen.dart';
 
@@ -18,6 +19,8 @@ import '../../providers/board_state_provider.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/locator.dart';
 import '../theme/colors.dart';
+import 'mlx90614_screen.dart';
+import 'ccs811_screen.dart';
 
 class SensorsScreen extends StatefulWidget {
   const SensorsScreen({super.key});
@@ -54,7 +57,6 @@ class _SensorsScreenState extends State<SensorsScreen> {
         64: ['SHT21'],
         72: ['ADS1115'],
         87: ['MAX30102'],
-        105: ['MPU925X'],
         119: ['BMP180'],
       };
 
@@ -62,15 +64,22 @@ class _SensorsScreenState extends State<SensorsScreen> {
       Map<String, String> actualSensorAddresses = {};
 
       for (int address in scannedAddresses) {
-        if (address == 104) {
+        if (address == 104 || address == 105) {
           try {
-            int deviceId = await i2c.readByte(104, 0x75);
+            int deviceId = await i2c.readByte(address, 0x75);
+            String hexAddress = '0x${address.toRadixString(16).toUpperCase()}';
+
             if (deviceId == 104) {
               actualDetectedSensors.add('MPU6050');
-              actualSensorAddresses['MPU6050'] = '0x68';
+              actualSensorAddresses['MPU6050'] = hexAddress;
+            } else if (deviceId == 112 || deviceId == 113 || deviceId == 115) {
+              actualDetectedSensors.add('MPU925X');
+              actualSensorAddresses['MPU925X'] = hexAddress;
+            } else {
+              logger.w('Unknown MPU device ID $deviceId at address $address');
             }
           } catch (e) {
-            logger.e('Failed to read MPU6050 ID at address 104: $e');
+            logger.e('Failed to read MPU ID at address $address: $e');
           }
         } else if (address == 57) {
           bool foundSpecific = false;
@@ -433,6 +442,9 @@ class _SensorsScreenState extends State<SensorsScreen> {
       case 'ADS1115':
         targetScreen = const ADS1115Screen();
         break;
+      case 'CCS811':
+        targetScreen = const CCS811Screen();
+        break;
       case 'BMP180':
         targetScreen = const BMP180Screen();
         break;
@@ -451,13 +463,18 @@ class _SensorsScreenState extends State<SensorsScreen> {
       case 'MPU6050':
         targetScreen = const MPU6050Screen();
         break;
+      case 'MPU925X':
+        targetScreen = const MPU925XScreen();
+        break;
       case 'MAX30102':
         targetScreen = const MAX30102Screen();
         break;
       case 'HMC5883L':
         targetScreen = const HMC5883LScreen();
         break;
-
+      case 'MLX90614':
+        targetScreen = const MLX90614Screen();
+        break;
       default:
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

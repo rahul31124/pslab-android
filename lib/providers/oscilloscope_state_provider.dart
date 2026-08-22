@@ -62,12 +62,16 @@ class OscilloscopeStateProvider extends ChangeNotifier {
   late bool isCH2Selected;
   late bool isCH3Selected;
   late bool isMICSelected;
-  late bool isInBuiltMICSelected;
+  late bool isBuiltInMICSelected;
   late bool isAudioInputSelected;
   late bool isTriggerSelected;
   late bool isTriggered;
   late bool isFourierTransformSelected;
   late bool isXYPlotSelected;
+
+  /// When true, each enabled channel is drawn in its own vertical pane
+  /// instead of overlapping on a single plot (desktop-friendly view).
+  late bool isStackedMode;
   late bool sineFit;
   late bool squareFit;
   late String triggerChannel;
@@ -146,6 +150,7 @@ class OscilloscopeStateProvider extends ChangeNotifier {
   late String xyPlotAxis1;
   late String xyPlotAxis2;
   late List<List<FlSpot>> dataEntries;
+  final List<List<List<FlSpot>>> _waveformBuffer = [];
   late List<List<FlSpot>> dataEntriesXYPlot;
   late List<List<FlSpot>> dataEntriesCurveFit;
   late List<String> dataParamsChannels;
@@ -183,12 +188,13 @@ class OscilloscopeStateProvider extends ChangeNotifier {
     isCH2Selected = false;
     isCH3Selected = false;
     isMICSelected = false;
-    isInBuiltMICSelected = false;
+    isBuiltInMICSelected = false;
     isAudioInputSelected = false;
     isTriggerSelected = false;
     isTriggered = false;
     isFourierTransformSelected = false;
     isXYPlotSelected = false;
+    isStackedMode = false;
     _monitor = true;
     _isRecording = false;
     isRunning = true;
@@ -345,7 +351,7 @@ class OscilloscopeStateProvider extends ChangeNotifier {
         _isProcessing = true;
 
         if (isRunning) {
-          if (isInBuiltMICSelected && !_audioJack.isListening()) {
+          if (isBuiltInMICSelected && !_audioJack.isListening()) {
             await _audioJack.initialize();
             await _audioJack.start();
           }
@@ -370,7 +376,7 @@ class OscilloscopeStateProvider extends ChangeNotifier {
                 channels.add('CH3');
               }
             }
-            if (isAudioInputSelected && isInBuiltMICSelected ||
+            if (isAudioInputSelected && isBuiltInMICSelected ||
                 (_scienceLab.isConnected() && isMICSelected)) {
               channels.add('MIC');
             }
@@ -389,7 +395,7 @@ class OscilloscopeStateProvider extends ChangeNotifier {
               dataEntries = [];
             }
           }
-          if (!isInBuiltMICSelected && _audioJack.isListening()) {
+          if (!isBuiltInMICSelected && _audioJack.isListening()) {
             await _audioJack.close();
           }
         }
@@ -454,7 +460,7 @@ class OscilloscopeStateProvider extends ChangeNotifier {
     List<String> paramsChannels = channels;
     String? channel;
 
-    if (isInBuiltMICSelected) {
+    if (isBuiltInMICSelected) {
       noOfChannels--;
     }
 
@@ -635,7 +641,7 @@ class OscilloscopeStateProvider extends ChangeNotifier {
         if (mA > _maxAmp) _maxAmp = mA;
       }
 
-      if (isInBuiltMICSelected) {
+      if (isBuiltInMICSelected) {
         noOfChannels++;
         isTriggered = false;
         entries.add([]);
@@ -773,6 +779,20 @@ class OscilloscopeStateProvider extends ChangeNotifier {
           OscilloscopeMeasurements
               .channel[channel]![ChannelMeasurements.negativePeak] = minY;
         }
+      }
+
+      if (_configProvider.config.bufferOverlayEnabled &&
+          dataEntries.isNotEmpty) {
+        _waveformBuffer.insert(
+          0,
+          dataEntries.map((spots) => List<FlSpot>.from(spots)).toList(),
+        );
+        final maxSize = _configProvider.config.bufferSize;
+        if (_waveformBuffer.length > maxSize) {
+          _waveformBuffer.removeRange(maxSize, _waveformBuffer.length);
+        }
+      } else {
+        _waveformBuffer.clear();
       }
 
       dataEntries = List.from(entries);
@@ -1028,7 +1048,7 @@ class OscilloscopeStateProvider extends ChangeNotifier {
   }
 
   Future<bool> startRecording() async {
-    if (!_scienceLab.isConnected() && !isInBuiltMICSelected) {
+    if (!_scienceLab.isConnected() && !isBuiltInMICSelected) {
       return false;
     }
     if (_configProvider.config.includeLocationData) {
@@ -1088,7 +1108,7 @@ class OscilloscopeStateProvider extends ChangeNotifier {
         if (isCH1Selected) 'CH1',
         if (isCH2Selected) 'CH2',
         if (isCH3Selected) 'CH3',
-        if (isMICSelected || isInBuiltMICSelected) 'MIC',
+        if (isMICSelected || isBuiltInMICSelected) 'MIC',
       ]);
     }
     final frameCount = _recordedData.isNotEmpty ? _recordedData.length - 1 : 0;
@@ -1216,9 +1236,71 @@ class OscilloscopeStateProvider extends ChangeNotifier {
     }
   }
 
+  void setStackedMode(bool value) {
+    isStackedMode = value;
+    notifyListeners();
+  }
+
+  /// Active channel names for stacked panes (selection and/or live data).
+  List<String> stackedChannelNames() {
+    final names = <String>[];
+    if (dataParamsChannels.isNotEmpty) {
+      for (final name in dataParamsChannels) {
+        if (!names.contains(name)) names.add(name);
+      }
+      return names;
+    }
+    if (isCH1Selected) names.add('CH1');
+    if (isCH2Selected) names.add('CH2');
+    if (isCH3Selected) names.add('CH3');
+    if (isMICSelected || isBuiltInMICSelected) names.add('MIC');
+    if (names.isEmpty) names.add('CH1');
+    return names;
+  }
+
+  List<LineChartBarData> createPlotForChannel(String channelName) {
+    final index = dataParamsChannels.indexOf(channelName);
+    final plots = <LineChartBarData>[];
+    if (index >= 0 && index < dataEntries.length) {
+      plots.add(
+        LineChartBarData(
+          spots: dataEntries[index],
+          isCurved: true,
+          color: colors[index % colors.length],
+          barWidth: 1,
+          dotData: const FlDotData(
+            show: false,
+          ),
+        ),
+      );
+    }
+    return plots;
+  }
+
   List<LineChartBarData> createPlots() {
     List<Color> curveFitColors = [Colors.yellow];
     List<LineChartBarData> plots = [];
+
+    if (_configProvider.config.bufferOverlayEnabled) {
+      for (int b = 0; b < _waveformBuffer.length; b++) {
+        final age = b + 1;
+        final opacity =
+            (1.0 - (age / (_waveformBuffer.length + 1))).clamp(0.1, 0.6);
+        plots.addAll(
+          List<LineChartBarData>.generate(
+            _waveformBuffer[b].length,
+            (index) => LineChartBarData(
+              spots: _waveformBuffer[b][index],
+              isCurved: true,
+              color: colors[index % colors.length].withValues(alpha: opacity),
+              barWidth: 1,
+              dotData: const FlDotData(show: false),
+            ),
+          ),
+        );
+      }
+    }
+
     plots.addAll(
       List<LineChartBarData>.generate(
         dataEntries.length,

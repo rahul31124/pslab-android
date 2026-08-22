@@ -41,6 +41,8 @@ class OscilloscopeScreen extends StatefulWidget {
 }
 
 class _OscilloscopeScreenState extends State<OscilloscopeScreen> {
+  static const double _controlsContentHeight = 95;
+
   late OscilloscopeStateProvider _provider;
   late OscilloscopeConfigProvider? _configProvider;
   AppLocalizations get appLocalizations => getIt.get<AppLocalizations>();
@@ -111,9 +113,20 @@ class _OscilloscopeScreenState extends State<OscilloscopeScreen> {
         ),
         PopupMenuItem<CheckboxListTile>(
           child: CheckboxListTile(
+            title: Text(appLocalizations.bufferOverlayMode),
+            value: _configProvider?.config.bufferOverlayEnabled ?? false,
+            onChanged: (bool? newValue) {
+              _configProvider?.updateBufferOverlayEnabled(newValue ?? false);
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        PopupMenuItem<CheckboxListTile>(
+          child: CheckboxListTile(
             title: Text(appLocalizations.automatedMeasurements),
             secondary: IconButton(
                 icon: Icon(Icons.info_outline),
+                tooltip: appLocalizations.info,
                 onPressed: () {
                   showDialog<void>(
                     context: context,
@@ -138,6 +151,40 @@ class _OscilloscopeScreenState extends State<OscilloscopeScreen> {
             onChanged: (bool? newValue) {
               setState(() {
                 _provider.isMeasurementsChecked = newValue ?? false;
+              });
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        PopupMenuItem<CheckboxListTile>(
+          child: CheckboxListTile(
+            title: Text(appLocalizations.stackedMode),
+            secondary: IconButton(
+                icon: Icon(Icons.info_outline),
+                tooltip: appLocalizations.info,
+                onPressed: () {
+                  showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(appLocalizations.stackedMode),
+                        content: Text(appLocalizations.stackedModeInfo),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(appLocalizations.ok),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }),
+            value: _provider.isStackedMode,
+            onChanged: (bool? newValue) {
+              setState(() {
+                _provider.setStackedMode(newValue ?? false);
               });
               Navigator.pop(context);
             },
@@ -252,6 +299,10 @@ class _OscilloscopeScreenState extends State<OscilloscopeScreen> {
       InstrumentHeading(text: appLocalizations.xyPlot),
       InstrumentBulletPoint(text: appLocalizations.xyPlotBulletPoint1),
       InstrumentImage(imagePath: widget.xyPlotView),
+      const InstrumentCompatibilitySection(
+        phonePartial: true,
+        pslabRequired: true,
+      ),
     ];
   }
 
@@ -358,10 +409,9 @@ class _OscilloscopeScreenState extends State<OscilloscopeScreen> {
                                         child: Container(
                                           margin:
                                               const EdgeInsets.only(right: 5),
-                                          padding:
-                                              const EdgeInsets.only(bottom: 20),
+                                          padding: EdgeInsets.zero,
                                           color: Colors.black,
-                                          child: OscilloscopeGraph(),
+                                          child: const OscilloscopeGraph(),
                                         ),
                                       ),
                                       _PlaybackControlBar(
@@ -396,26 +446,21 @@ class _OscilloscopeScreenState extends State<OscilloscopeScreen> {
                                               Column(
                                                 children: [
                                                   Expanded(
-                                                    flex:
-                                                        constraints.maxHeight <
-                                                                600
-                                                            ? 68
-                                                            : 80,
                                                     child: Container(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 20),
+                                                      padding: EdgeInsets.zero,
                                                       color: Colors.black,
                                                       child:
                                                           const OscilloscopeGraph(),
                                                     ),
                                                   ),
-                                                  Expanded(
-                                                    flex:
-                                                        constraints.maxHeight <
-                                                                600
-                                                            ? 32
-                                                            : 20,
+                                                  SizedBox(
+                                                    height:
+                                                        _controlsContentHeight
+                                                            .clamp(
+                                                      0,
+                                                      constraints.maxHeight *
+                                                          0.35,
+                                                    ),
                                                     child: Selector<
                                                         OscilloscopeStateProvider,
                                                         int>(
@@ -475,27 +520,30 @@ class _OscilloscopeScreenState extends State<OscilloscopeScreen> {
                     ),
                   ),
                   actions: [
-                    TextButton(
-                      onPressed: () {
-                        if ((((provider.isCH1Selected ||
-                                        provider.isCH2Selected ||
-                                        provider.isCH3Selected ||
-                                        provider.isMICSelected) &&
-                                    getIt<ScienceLab>().isConnected()) ||
-                                provider.isInBuiltMICSelected) &&
-                            !provider.autoScale()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(appLocalizations.noSignal),
-                            ),
-                          );
-                        }
-                      },
-                      child: Text(appLocalizations.autoScale,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          )),
+                    Tooltip(
+                      message: appLocalizations.autoScale,
+                      child: TextButton(
+                        onPressed: () {
+                          if ((((provider.isCH1Selected ||
+                                          provider.isCH2Selected ||
+                                          provider.isCH3Selected ||
+                                          provider.isMICSelected) &&
+                                      getIt<ScienceLab>().isConnected()) ||
+                                  provider.isBuiltInMICSelected) &&
+                              !provider.autoScale()) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(appLocalizations.noSignal),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text(appLocalizations.autoScale,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ),
                     ),
                     if (widget.playbackData != null &&
                         _playbackMetadata != null &&
@@ -518,6 +566,9 @@ class _OscilloscopeScreenState extends State<OscilloscopeScreen> {
                                     Icons.play_arrow,
                                     color: Colors.white,
                                   ),
+                            tooltip: provider.isRunning
+                                ? appLocalizations.pause
+                                : appLocalizations.play,
                             onPressed: () {
                               if (provider.isRunning) {
                                 provider.isRunning = false;

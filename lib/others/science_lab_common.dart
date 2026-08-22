@@ -1,17 +1,16 @@
 import 'package:pslab/communication/handler/base.dart';
 import 'package:pslab/communication/science_lab.dart';
-import 'package:pslab/communication/socket_client.dart';
 import 'package:pslab/others/logger_service.dart';
+import 'package:pslab/communication/handler/wifi_comms_handler.dart';
+import 'package:pslab/communication/handler/comms_handler.dart';
 
 class ScienceLabCommon {
   static late ScienceLab _scienceLab;
   static late CommunicationHandler communicationHandler;
-  static late SocketClient _socketClient;
 
   ScienceLabCommon(CommunicationHandler mCommunicationHandler) {
     communicationHandler = mCommunicationHandler;
     _scienceLab = ScienceLab(communicationHandler);
-    _socketClient = _scienceLab.mSocketClient;
   }
 
   ScienceLab getScienceLab() {
@@ -19,6 +18,12 @@ class ScienceLabCommon {
   }
 
   Future<bool> openDevice() async {
+    if (communicationHandler is! PSLabCommunicationHandler) {
+      logger.d("Swapping communication handler to USB...");
+      communicationHandler = PSLabCommunicationHandler();
+      _scienceLab.mCommunicationHandler = communicationHandler;
+    }
+
     await _scienceLab.connect();
     if (!_scienceLab.isConnected()) {
       logger.d("Error in connection");
@@ -32,8 +37,15 @@ class ScienceLabCommon {
   }
 
   Future<bool> openWiFiDevice() async {
+    if (communicationHandler is! WifiCommsHandler) {
+      logger.d("Swapping communication handler to Wi-Fi...");
+      communicationHandler = WifiCommsHandler();
+      _scienceLab.mCommunicationHandler = communicationHandler;
+      await communicationHandler.initialize();
+    }
+
     await _scienceLab.connectWiFi();
-    return _socketClient.isConnected();
+    return _scienceLab.isConnected();
   }
 
   void setConnected(bool connected) {
@@ -49,10 +61,13 @@ class ScienceLabCommon {
   }
 
   bool isWiFiConnected() {
-    return _socketClient.isConnected();
+    return communicationHandler.isConnected() &&
+        (communicationHandler is WifiCommsHandler);
   }
 
   void setWiFiConnected(bool connected) {
-    _socketClient.setConnected(connected);
+    if (communicationHandler is WifiCommsHandler) {
+      communicationHandler.connected = connected;
+    }
   }
 }

@@ -127,6 +127,9 @@ class _LogicAnalyzerScreenState extends State<LogicAnalyzerScreen> {
       InstrumentBulletPoint(
         text: appLocalizations.logicAnalyzerMeasurementBulletPoint3,
       ),
+      const InstrumentCompatibilitySection(
+        pslabRequired: true,
+      ),
     ];
   }
 
@@ -459,6 +462,7 @@ class _LogicAnalyzerScreenState extends State<LogicAnalyzerScreen> {
                     : [
                         IconButton(
                           icon: Icon(Icons.save, color: Colors.white),
+                          tooltip: appLocalizations.saveData,
                           onPressed: () async {
                             if (!getIt.get<ScienceLab>().isConnected()) {
                               if (context.mounted) {

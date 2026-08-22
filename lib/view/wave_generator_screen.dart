@@ -83,6 +83,9 @@ class _WaveGeneratorScreenState extends State<WaveGeneratorScreen> {
       InstrumentBulletPoint(text: appLocalizations.pwmBulletPoint2),
       InstrumentBulletPoint(text: appLocalizations.pwmBulletPoint3),
       InstrumentBulletPoint(text: appLocalizations.pwmBulletPoint4),
+      const InstrumentCompatibilitySection(
+        pslabRequired: true,
+      ),
     ];
   }
 
@@ -314,6 +317,7 @@ class _WaveGeneratorScreenState extends State<WaveGeneratorScreen> {
                   PopupMenuButton<String>(
                     color: primaryRed,
                     icon: const Icon(Icons.play_arrow, color: Colors.white),
+                    tooltip: appLocalizations.selectInstrument,
                     onSelected: (value) {
                       if (value == appLocalizations.oscilloscope) {
                         if (getIt.get<ScienceLab>().isConnected()) {
@@ -398,6 +402,7 @@ class _WaveGeneratorScreenState extends State<WaveGeneratorScreen> {
                   ),
                   IconButton(
                     icon: Icon(Icons.save, color: Colors.white),
+                    tooltip: appLocalizations.saveData,
                     onPressed: () async {
                       if (mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
