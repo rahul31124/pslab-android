@@ -213,16 +213,17 @@ jobs:
             </details>
             `;
 
-            let body = `## Build Status: `;
+            let body = `**Build Status:** `;
             if (conclusion === 'success') {
-              body += `**Build successful.**\n\n## Build artifacts to test\n${artifactLinks || '_No artifacts uploaded._'}\n\n## Screenshots\n${screenshotsSection}`;
+              body += `Build successful.\n\n## Build artifacts to test\n${artifactLinks || '_No artifacts uploaded._'}\n\n## Screenshots\n${screenshotsSection}`;
             } else {
-              body += `**Build workflow failed.** _Please check the Actions logs for details._\n`;
+              body += `Build workflow failed. _Please check the Actions logs for details._\n`;
               if (artifactLinks) {
-                body += `\n## Build artifacts to test (Available before failure)\n${artifactLinks}\n`;
+                body += `\n## Build artifacts to test\n(Available before failure)\n\n${artifactLinks}\n`;
               }
               body += `\n> *Note: Screenshots are not generated on failed builds. Below are the latest screenshots from the \`pr-screenshots\` branch, if they exist.*\n\n## Screenshots\n${screenshotsSection}`;
             }
+            
 
             const comments = await github.rest.issues.listComments({
               owner,
