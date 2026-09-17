@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
     AppLocalizations? appLocalizations;
     _preCacheImages(context);
     return ScreenUtilInit(
-      designSize: const Size(361, 690),
+      designSize: const Size(362, 690),
       builder: (context, child) {
         return Consumer<SettingsConfigProvider>(
           builder: (context, provider, child) {
