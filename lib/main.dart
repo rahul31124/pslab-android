@@ -116,8 +116,6 @@ class MyApp extends StatelessWidget {
               routes: {
                 '/': (context) =>
                     const _LocaleAware(child: InstrumentsScreen()),
-                '/oscilloscope': (context) =>
-                    const _LocaleAware(child: OscilloscopeScreen()),
                 '/multimeter': (context) =>
                     const _LocaleAware(child: MultimeterScreen()),
                 '/waveGenerator': (context) =>
