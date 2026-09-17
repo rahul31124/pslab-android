@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
     AppLocalizations? appLocalizations;
     _preCacheImages(context);
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
+      designSize: const Size(361, 690),
       builder: (context, child) {
         return Consumer<SettingsConfigProvider>(
           builder: (context, provider, child) {
@@ -116,6 +116,8 @@ class MyApp extends StatelessWidget {
               routes: {
                 '/': (context) =>
                     const _LocaleAware(child: InstrumentsScreen()),
+                '/oscilloscope': (context) =>
+                    const _LocaleAware(child: OscilloscopeScreen()),
                 '/multimeter': (context) =>
                     const _LocaleAware(child: MultimeterScreen()),
                 '/waveGenerator': (context) =>
