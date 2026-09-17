@@ -81,9 +81,12 @@ jobs:
       - name: Update PR Screenshots
         shell: bash
         run: |
+          # Only run git commands if we actually downloaded screenshots
           if [ -d "screenshots" ] && [ "$(ls -A screenshots 2>/dev/null)" ]; then
             git config --global user.name "github-actions[bot]"
             git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            
+            # Try to clone. If the branch doesn't exist yet, initialize it automatically.
             if ! git clone --branch=pr-screenshots --depth=1 https://${{ github.repository_owner }}:${{ github.token }}@github.com/${{ github.repository }} pr-screenshots; then
               echo "Branch pr-screenshots not found. Creating a new one."
               mkdir pr-screenshots
@@ -142,6 +145,8 @@ jobs:
             artifacts.data.artifacts.forEach(artifact => {
               if (!ignoredArtifacts.includes(artifact.name)) {
                 const url = `https://github.com/${owner}/${repo}/actions/runs/${{ github.event.workflow_run.id }}/artifacts/${artifact.id}`;
+                
+                // Map raw artifact names to pretty platform names
                 let platformName = artifact.name;
                 if (artifact.name.includes('apk-files')) platformName = 'Android';
                 else if (artifact.name.includes('iOS IPA')) platformName = 'iOS';
