@@ -38,6 +38,7 @@ import 'package:pslab/view/soundmeter_screen.dart';
 import 'package:pslab/view/thermometer_screen.dart';
 import 'package:pslab/view/wave_generator_screen.dart';
 import 'package:pslab/view/experiments_screen.dart';
+import 'package:pslab/view/oled_display_screen.dart';
 import 'constants.dart';
 
 import 'package:pslab/src/rust/frb_generated.dart';
@@ -89,7 +90,7 @@ class MyApp extends StatelessWidget {
     AppLocalizations? appLocalizations;
     _preCacheImages(context);
     return ScreenUtilInit(
-      designSize: const Size(362, 690),
+      designSize: const Size(360, 690),
       builder: (context, child) {
         return Consumer<SettingsConfigProvider>(
           builder: (context, provider, child) {
