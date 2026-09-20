@@ -81,14 +81,11 @@ jobs:
       - name: Update PR Screenshots
         shell: bash
         run: |
-          # Only run git commands if we actually downloaded screenshots
           if [ -d "screenshots" ] && [ "$(ls -A screenshots 2>/dev/null)" ]; then
             git config --global user.name "github-actions[bot]"
             git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
             
-            # Try to clone. If the branch doesn't exist yet, initialize it automatically.
             if ! git clone --branch=pr-screenshots --depth=1 https://${{ github.repository_owner }}:${{ github.token }}@github.com/${{ github.repository }} pr-screenshots; then
-              echo "Branch pr-screenshots not found. Creating a new one."
               mkdir pr-screenshots
               cd pr-screenshots
               git init
@@ -122,8 +119,6 @@ jobs:
             git branch -D pr-screenshots || true
             git branch -m pr-screenshots
             git push --force origin pr-screenshots
-          else
-            echo "No screenshots found to process. Skipping."
           fi
 
       - name: Update PR Comment
@@ -146,7 +141,6 @@ jobs:
               if (!ignoredArtifacts.includes(artifact.name)) {
                 const url = `https://github.com/${owner}/${repo}/actions/runs/${{ github.event.workflow_run.id }}/artifacts/${artifact.id}`;
                 
-                // Map raw artifact names to pretty platform names
                 let platformName = artifact.name;
                 if (artifact.name.includes('apk-files')) platformName = 'Android';
                 else if (artifact.name.includes('iOS IPA')) platformName = 'iOS';
@@ -213,20 +207,16 @@ jobs:
             </details>
             `;
 
-         let body = '<strong>Build Status:</strong> ';
-            
+            let body = `**Build Status:** `;
             if (conclusion === 'success') {
-              body += 'Build successful.\n\n## Build artifacts to test\n\n' + (artifactLinks || '_No artifacts uploaded._') + '\n\n## Screenshots\n\n' + screenshotsSection;
+              body += `Build successful.\n\n## Build artifacts to test\n\n${artifactLinks || '_No artifacts uploaded._'}\n\n## Screenshots\n\n${screenshotsSection}`;
             } else {
-              body += 'Build workflow failed. <em>Please check the Actions logs for details.</em>\n';
-              
+              body += `Build workflow failed. _Please check the Actions logs for details._\n`;
               if (artifactLinks) {
-                body += '\n## Build artifacts to test\n\n(Available before failure)\n\n' + artifactLinks + '\n';
+                body += `\n## Build artifacts to test\n\n(Available before failure)\n\n${artifactLinks}\n`;
               }
-              
-              body += '\n> *Note: Screenshots are not generated on failed builds. Below are the latest screenshots from the `pr-screenshots` branch, if they exist.*\n\n## Screenshots\n\n' + screenshotsSection;
+              body += `\n> *Note: Screenshots are not generated on failed builds. Below are the latest screenshots from the \`pr-screenshots\` branch, if they exist.*\n\n## Screenshots\n\n${screenshotsSection}`;
             }
-            
 
             const comments = await github.rest.issues.listComments({
               owner,
