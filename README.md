@@ -9,8 +9,13 @@ Repository for the PSLab App for performing experiments with the [Pocket Science
 [![Twitter Follow](https://img.shields.io/twitter/follow/pslabio.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/pslabio)
 [![Translation status](https://hosted.weblate.org/widgets/fossasia/-/pslab-app/svg-badge.svg)](https://hosted.weblate.org/projects/fossasia/pslab-app/)
 
-This repository contains the **PSLab** application, a cross-platform app for performing science and engineering experiments with the **Pocket Science Lab (PSLab)** device. PSLab is an open-source hardware platform that combines multiple laboratory instruments into a single portable device, including an oscilloscope, waveform generator, frequency counter, programmable voltage and current source, logic analyzer, and data logger. The application provides an intuitive interface for interacting with these instruments across multiple platforms.
-Our website is at https://pslab.io.
+This repository contains the **PSLab** application, a cross-platform app for performing science and engineering experiments using the **Pocket Science Lab (PSLab)** device. PSLab is an open-source hardware platform that combines multiple laboratory instruments into a single portable device, including an oscilloscope, multimeter, waveform generator, frequency counter, programmable voltage and current source, logic analyzer, I²C sensor interface, and many more experimental tools.
+
+While the application primarily supports PSLab hardware, it also supports other compatible hardware boards, such as [**Labrador by EspoTek**](https://github.com/espotek-org/Labrador), expanding its capabilities for science and engineering experimentation across different hardware platforms.
+
+The application provides an intuitive interface for interacting with supported instruments across multiple platforms.
+
+Visit our website: [https://pslab.io](https://pslab.io).
 
 ## Download
 
@@ -26,16 +31,13 @@ Sign up for the latest updates and test new features early by joining our [beta 
 * You can get a Pocket Science Lab device from the [FOSSASIA Shop](https://fossasia.com).
 * More resellers are listed on the [PSLab website](https://pslab.io/shop/).
 
+
+
 ## Communication
 
 * The PSLab [chat channel is on Gitter](https://gitter.im/fossasia/pslab).
 * Please also join us on the [PSLab Mailing List](https://groups.google.com/forum/#!forum/pslab-fossasia).
 
-## Roadmap
-
-- [x] Establish communication between the cross-platform application and the PSLab device.
-- [x] Implement core scientific instruments and expose PSLab hardware functionality.
-- [ ] Add wireless connectivity (currently under development).
 
 ## Screenshots
 
@@ -106,29 +108,50 @@ Sign up for the latest updates and test new features early by joining our [beta 
 </table>
 
 ## Features
-|   ***Feature***        | **Description**                                                   | **Status**         |
-|------------------------|-------------------------------------------------------------------|--------------------|
-| Home Screen            | Show status and version of PSLab device                           | :heavy_check_mark: |
-| Instruments            | Exposes PSLab instruments like Oscilloscope, etc                  | :heavy_check_mark: |
-| Oscilloscope           | Shows variation of analog signals                                 | :heavy_check_mark: |
-| Multimeter             | Measures voltage, current, resistance and capacitance             | :heavy_check_mark: |
-| Logical Analyzer       | Captures and displays signals from digital system                 | :heavy_check_mark: |
-| Wave Generator         | Generates arbitrary analog and digital waveforms                  | :heavy_check_mark: |
-| Power Source           | Generates programmable voltage and currents	                     | :heavy_check_mark: |
-| Luxmeter              | Measures the ambient light intensity                               | :heavy_check_mark: |
-| Barometer             | Measures the Pressure                                              | :heavy_check_mark: |
-| Accelerometer          | Measures the acceleration of the device                           | :heavy_check_mark: |
-| Gyrometer             | Measures the rate of rotation                                      | :heavy_check_mark: |
-| Compass                | Measures the absolute rotation relative to earth magnetic poles   | :heavy_check_mark: |
-| Thermometer            | Measures the ambient temperature                                  | :heavy_check_mark: |
-| Gas Sensor             | Detects gases, including NH3, NOx, alcohol, benzene, smoke and CO2| :heavy_check_mark: |
-| Robotic Arm Controller | Allows to control 4 servo motors of the robotic arm independently | :heavy_check_mark: |
-| OLED Display          | Displays graphics, animations, GIFs, and retro games on external I²C OLED displays | :heavy_check_mark: |
-| Sound Meter           | Measures ambient sound levels using the device microphone                           | :heavy_check_mark: |
+## Instruments
 
-**Supported Devices:**
-- PSLab v5: VendorID `04d8`, ProductID `00df`
-- PSLab v6: VendorID `10c4`, ProductID `ea60`
+| **Instrument** | **Description** |
+|---|---|
+| Home Screen | Displays the status and version of the connected PSLab device. |
+| Instruments | Provides access to PSLab instruments and experimental tools. |
+| Oscilloscope | Visualizes variations in analog signals over time. |
+| Multimeter | Measures voltage, current, resistance, and capacitance. |
+| Logic Analyzer | Captures and displays digital signals for analyzing digital systems. |
+| Wave Generator | Generates arbitrary analog and digital waveforms. |
+| Power Source | Generates programmable voltage and current outputs. |
+| Luxmeter | Measures ambient light intensity. |
+| Barometer | Measures atmospheric pressure. |
+| Accelerometer | Measures acceleration along different axes. |
+| Gyrometer | Measures the rate of rotation. |
+| Compass | Measures orientation relative to Earth's magnetic field. |
+| Thermometer | Measures ambient temperature. |
+| Gas Sensor | Detects gases such as NH₃, NOx, alcohol, benzene, smoke, and CO₂. |
+| Robotic Arm Controller | Controls up to four servo motors of a robotic arm independently. |
+| OLED Display | Displays graphics, animations, GIFs, and retro games on external I²C OLED displays. |
+| Sound Meter | Measures ambient sound levels using the device microphone. |
+
+## AI-Powered Chatbot
+
+The application includes an **AI-powered chatbot** that provides contextual assistance using free large language models (LLMs) accessed through [OpenRouter](https://openrouter.ai/). Supported models include:
+
+- `openrouter/free`
+- `nvidia/nemotron-3.5-lightning:free`
+- `minimax/minimax-m3.1-flash:free`
+- `cohere/north-mini-code:free`
+- `google/gemma-4-31b-it:free`
+- `google/gemma-4-26b-a4b-it:free`
+
+The chatbot uses **Retrieval-Augmented Generation (RAG)** to provide relevant, context-aware responses by combining information from the local knowledge base at `/assets/knowledge/knowledge.json` with live provider data from the application. This enables it to answer user queries with information relevant to the current screen, supported instruments, and available device data.
+
+## Supported Hardware
+
+The PSLab app supports the following hardware devices:
+
+| Device | USB Vendor ID | USB Product ID | Firmware Requirement |
+|--------|--------------|---------------|----------------------|
+| [PSLab v5](https://pslab.io) | `04d8` | `00df` | Firmware v3.0 or higher |
+| [PSLab v6](https://pslab.io) | `10c4` | `ea60` | Latest firmware recommended |
+| [EspoTek Labrador](http://espotek.com/labrador) | `03EB` | `2FE4` | `labrafrim_000_c03.hex` |
 
 ## How to Use
 
