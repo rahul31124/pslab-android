@@ -224,7 +224,9 @@ No runtime permissions are required.
 
 The application also supports the [**EspoTek Labrador**](https://github.com/espotek-org/Labrador), an open-source electronic lab board that provides tools for electronics testing and experimentation.
 
-For information about the hardware, setup instructions, and supported capabilities, check out the [EspoTek Labrador repository](https://github.com/espotek-org/Labrador).
+For information about the hardware, setup instructions, and supported capabilities, check out here
+- [docs/espotek_labrador.md](https://github.com/fossasia/pslab-app/blob/main/docs/espotek_labrador.md)
+
 
 ## Video Demo
 * [PSLab Android App Overview](https://www.youtube.com/watch?v=JJfsF0b8M8k).
