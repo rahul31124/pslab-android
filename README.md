@@ -108,7 +108,7 @@ Sign up for the latest updates and test new features early by joining our [beta 
 </table>
 
 ## Features
-## Instruments
+### Instruments
 
 | **Instrument** | **Description** |
 |---|---|
@@ -155,7 +155,9 @@ The PSLab app supports the following hardware devices:
 
 ## How to Use
 
-### Android
+### PSLab
+
+#### Android
 
 To use the PSLab device with Android, you need:
 
@@ -166,11 +168,11 @@ To use the PSLab device with Android, you need:
 
 Connect the PSLab device to your Android device using the OTG cable. The application will automatically detect the device and establish communication.
 
-### iOS
+#### iOS
 
-iOS support currently communicates with the PSLab device over **Wi-Fi** using an **ESP-01** module. This functionality is currently **under development**.
+Communicates with the PSLab device over **Wi-Fi** using an **ESP-01** module. Compatibility may vary.
 
-### Windows, macOS, Linux, and Web
+#### Windows, macOS, Linux, and Web
 
 These platforms communicate with the PSLab device over USB serial. Before connecting the device, install the **CP210x USB-to-UART Bridge Virtual COM Port (VCP) drivers** for your operating system.
 
@@ -191,7 +193,7 @@ The application requests the following permissions:
 | Microphone | Audio oscilloscope functionality |
 | Internet | Network connectivity |
 | Storage | Reading and writing logged data |
-| USB Host | Communication with PSLab hardware |
+| USB Host | Communication with supported USB hardware |
 | Motion Sensors | Compass and motion-based features |
 | Ambient Temperature Sensor | Device temperature measurements (optional) |
 
@@ -217,6 +219,12 @@ No runtime permissions are required.
 
 No runtime permissions are required.
 
+
+### EspoTek Labrador
+
+The application also supports the [**EspoTek Labrador**](https://github.com/espotek-org/Labrador), an open-source electronic lab board that provides tools for electronics testing and experimentation.
+
+For information about the hardware, setup instructions, and supported capabilities, check out the [EspoTek Labrador repository](https://github.com/espotek-org/Labrador).
 
 ## Video Demo
 * [PSLab Android App Overview](https://www.youtube.com/watch?v=JJfsF0b8M8k).
